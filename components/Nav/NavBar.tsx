@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
+import { HoverBorderGradient } from "../ui/hover-border-gradient";
 const categories = [
   {
     title: "Sale",
@@ -158,6 +159,16 @@ const NavBar = () => {
           <h1 className="text-3xl font-bold">CLICK2BY</h1>
 
           <div className="flex gap-2 items-center align-middle">
+            <div className="m-40 flex justify-center text-center">
+      <HoverBorderGradient
+        containerClassName="rounded-full"
+        as="button"
+        className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
+      > 
+        <span>BUY NOW</span>
+      </HoverBorderGradient>
+    </div>
+
             <div className="p-2 py-1 hover:bg-black hover:text-white transition-all duration-200 cursor-pointer">
               <CircleUser size={32} strokeWidth={1} />
             </div>
