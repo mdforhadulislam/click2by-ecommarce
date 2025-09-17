@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { AnchorHTMLAttributes, ReactNode } from "react";
 import { motion } from "motion/react";
 
 
@@ -109,7 +109,11 @@ export const ProductItem = ({
   );
 };
 
-export const HoveredLink = ({ children, ...rest }: any) => {
+type HoveredLinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
+  children: ReactNode;
+};
+
+export const HoveredLink = ({ children, ...rest }: HoveredLinkProps) => {
   return (
     <a
       {...rest}
