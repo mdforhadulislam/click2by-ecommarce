@@ -177,7 +177,7 @@ const NavBar = () => {
           </div>
         </div>
       </div>
-      <div className="container px-5 py-2 m-auto">
+      <div className="container px-5 py-2 m-auto border-b">
         {/* Main Menu */}
         <ul className="hidden lg:flex gap-8 font-medium text-gray-700 relative">
           {categories.map((cat) => (
