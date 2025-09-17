@@ -159,7 +159,6 @@ const NavBar = () => {
           <h1 className="text-3xl font-bold">CLICK2BY</h1>
 
           <div className="flex gap-2 items-center align-middle">
-            <div className="m-40 flex justify-center text-center">
       <HoverBorderGradient
         containerClassName="rounded-full"
         as="button"
@@ -167,7 +166,7 @@ const NavBar = () => {
       > 
         <span>BUY NOW</span>
       </HoverBorderGradient>
-    </div>
+
 
             <div className="p-2 py-1 hover:bg-black hover:text-white transition-all duration-200 cursor-pointer">
               <CircleUser size={32} strokeWidth={1} />
