@@ -2,6 +2,23 @@
   "name": "click2by-ecommarce",
   "version": "0.1.0",
   "private": true,
+  "description": "Click2By is a modern full-stack e-commerce web app designed for a seamless shopping experience. It offers product browsing, advanced search & filters, cart, secure checkout, order tracking, user au…",
+  "keywords": [
+    "click2by",
+    "e-commarce-app"
+  ],
+  "homepage": "https://github.com/mdforhadulislam/click2by-ecommarce#readme",
+  "bugs": {
+    "url": "https://github.com/mdforhadulislam/click2by-ecommarce/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mdforhadulislam/click2by-ecommarce.git"
+  },
+  "license": "ISC",
+  "author": "Forhadul Islam <mdforhadul44@gmail.com>",
+  "type": "commonjs",
+  "main": "index.js",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
