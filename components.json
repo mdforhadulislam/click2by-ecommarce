@@ -16,7 +16,9 @@
     "utils": "@/lib/utils",
     "ui": "@/components/ui",
     "lib": "@/lib",
-    "hooks": "@/hooks"
+    "utilities":"@/utilities",
+    "server":"@/server",
+    "context":"@/context"
   },
   "registries": {
     "@aceternity": "https://ui.aceternity.com/registry/{name}.json"
