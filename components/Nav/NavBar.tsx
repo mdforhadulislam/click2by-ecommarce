@@ -12,7 +12,7 @@ import { IconHome } from "@tabler/icons-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { FloatingDock } from "../ui/floating-dock";
 import { HoverBorderGradient } from "../ui/hover-border-gradient";
-const categories = [
+export const categories = [
   {
     title: "Sale",
     links: [
@@ -182,6 +182,7 @@ const categories = [
 
 const NavBar = () => {
   const [active, setActive] = useState<string | null>(null);
+  const [isMobileMenu, setIsMobileMenu] = useState<boolean>(false)
 
   const links = [
     {
@@ -194,7 +195,10 @@ const NavBar = () => {
         />
       ),
       href: "#",
-      onclick: () => {},
+      onClick: () => {
+        console.log("Hello");
+        
+      },
     },
 
     {
@@ -207,13 +211,11 @@ const NavBar = () => {
         />
       ),
       href: "#",
-      onclick: () => {},
     },
     {
       title: "HOME",
       icon: <IconHome className="h-full w-full text-neutral-500 " />,
       href: "#",
-      onclick: () => {},
     },
     {
       title: "BUY NOW",
@@ -225,7 +227,6 @@ const NavBar = () => {
         />
       ),
       href: "#",
-      onclick: () => {},
     },
     {
       title: "NEW OFFERS",
@@ -237,7 +238,6 @@ const NavBar = () => {
         />
       ),
       href: "#",
-      onclick: () => {},
     },
   ];
 
@@ -337,7 +337,7 @@ const NavBar = () => {
 
       <FloatingDock
         items={links}
-        desktopClassName={` fixed w-screen bottom-0 z-[30]`}
+       className={` fixed w-screen bottom-0 z-[30]`}
       />
     </header>
   );

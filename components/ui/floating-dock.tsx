@@ -9,28 +9,10 @@ import {
 } from "motion/react";
 
 import { useRef, useState } from "react";
+import { categories } from "../Nav/NavBar";
+import { ArrowLeft, X } from "lucide-react";
 
 export const FloatingDock = ({
-  items,
-  desktopClassName,
-}: {
-  items: {
-    title: string;
-    icon: React.ReactNode;
-    href: string;
-    onClick: () => void;
-  }[];
-  desktopClassName?: string;
-  mobileClassName?: string;
-}) => {
-  return (
-    <>
-      <FloatingDockDesktop items={items} className={desktopClassName} />
-    </>
-  );
-};
-
-const FloatingDockDesktop = ({
   items,
   className,
 }: {
@@ -38,11 +20,17 @@ const FloatingDockDesktop = ({
     title: string;
     icon: React.ReactNode;
     href: string;
-    onClick: () => void;
   }[];
   className?: string;
 }) => {
   const mouseX = useMotionValue(Infinity);
+  const [isMenu, setIsMenu]= useState(true)
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  // jodi category select kora thake
+  const activeCategory = categories.find(
+    (cat) => cat.title === selectedCategory
+  );
   return (
     <motion.div
       onMouseMove={(e) => mouseX.set(e.pageX)}
@@ -52,13 +40,66 @@ const FloatingDockDesktop = ({
         className
       )}
     >
+
+      {isMenu && (
+        <div className="fixed inset-0 bg-black/50 z-30 p-4">
+          <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl p-4 h-[70%] overflow-y-auto hiddenScrollBar">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-2">
+                {selectedCategory && (
+                  <button
+                    onClick={() => setSelectedCategory(null)}
+                    className="p-1 rounded-full hover:bg-gray-100"
+                  >
+                    <ArrowLeft className="h-5 w-5" />
+                  </button>
+                )}
+                <h2 className="text-lg font-semibold">
+                  {selectedCategory || "Menu"}
+                </h2>
+              </div>
+              <button onClick={() => setIsMenu(false)}>
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+
+            {/* Level 1: Main Categories */}
+            {!selectedCategory && (
+              <ul className="mt-4 space-y-4">
+                {categories.map((item, idx) => (
+                  <li
+                    key={idx}
+                    className="border-b pb-2 text-neutral-700 hover:text-black cursor-pointer"
+                    onClick={() => setSelectedCategory(item.title)}
+                  >
+                    {item.title}
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {/* Level 2: Sub Categories */}
+            {selectedCategory && activeCategory && (
+              <ul className="mt-4 space-y-4">
+                {activeCategory.links.map((sub, i) => (
+                  <li
+                    key={i}
+                    className="border-b pb-2 text-neutral-600 hover:text-black cursor-pointer"
+                  >
+                    {sub}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+      )}
+
+
+
+
       {items.map((item) => (
-        <IconContainer
-          mouseX={mouseX}
-          key={item.title}
-          {...item}
-          onClick={item.onClick}
-        />
+        <IconContainer mouseX={mouseX} key={item.title} {...item} setIsMenu={setIsMenu} isMenu={isMenu} />
       ))}
     </motion.div>
   );
@@ -69,13 +110,15 @@ function IconContainer({
   title,
   icon,
   href,
-  onClick,
+  setIsMenu,
+  isMenu
 }: {
   mouseX: MotionValue;
   title: string;
   icon: React.ReactNode;
   href: string;
-  onClick: () => void;
+   setIsMenu: (value: boolean) => void;
+   isMenu:boolean
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -124,13 +167,17 @@ function IconContainer({
   const [hovered, setHovered] = useState(false);
 
   return (
-    <a>
+    <a onClick={()=>{
+      if(title== "MENU"){
+        setIsMenu(!isMenu)
+      }
+    }}>
       <motion.div
         ref={ref}
         style={{ width, height }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        className="relative flex aspect-square items-center justify-center rounded-full bg-gray-200 "
+        className="relative flex aspect-square items-center justify-center rounded-full bg-gray-200 cursor-pointer z-31"
       >
         <AnimatePresence>
           {hovered && (
