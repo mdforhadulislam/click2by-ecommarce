@@ -51,9 +51,9 @@ export const FloatingDock = ({
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
               transition={{ type: "spring", stiffness: 120, damping: 20 }}
-              className="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl py-5 px-3 h-[70%]"
+              className="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl py-5 px-3 h-[68%]"
             >
-              <div className="w-full p-3 h-full overflow-y-auto hiddenScrollBar">
+              <div className="w-full p-3 h-full overflow-y-auto ">
                 <div className="flex justify-between items-center">
                   <div className="flex items-center gap-2">
                     {selectedCategory && (
