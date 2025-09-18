@@ -1,6 +1,4 @@
-import Footer from "@/components/Footer/Footer";
-import NavBar from "@/components/Nav/NavBar";
-import LangContextProvider from "@/context/LangContext";
+import MainLayout from "@/utilities/MainLayout";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -56,11 +54,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <LangContextProvider>
-          <NavBar />
-          {children}
-          <Footer />
-        </LangContextProvider>
+        <MainLayout>{children}</MainLayout>
       </body>
     </html>
   );

@@ -1,9 +1,18 @@
 "use client";
-import { CircleUser, TextAlignJustify } from "lucide-react";
+import { CircleUser, ShoppingCart, TextAlignJustify, TicketPercent } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
+import {
+  IconBrandGithub,
+  IconBrandX,
+  IconExchange,
+  IconHome,
+  IconNewSection,
+  IconTerminal2,
+} from "@tabler/icons-react";
 import { AnimatePresence, motion } from "framer-motion";
+import { FloatingDock } from "../ui/floating-dock";
 import { HoverBorderGradient } from "../ui/hover-border-gradient";
 const categories = [
   {
@@ -17,6 +26,30 @@ const categories = [
       "Kids Fashion",
       "Fragrances",
       "Accessories",
+      "Unstitched",
+      "Pret Wear",
+      "Home Essentials",
+      "Men’s Fashion",
+      "Home Essentials",
+      "Men’s Fashion",
+      "Western Wear",
+      "Kids Fashion",
+      "Fragrances",
+      "Accessories",
+      "Unstitched",
+      "Pret Wear",
+      "Home Essentials",
+      "Men’s Fashion",
+      "Home Essentials",
+      "Men’s Fashion",
+      "Western Wear",
+      "Kids Fashion",
+      "Fragrances",
+      "Accessories",
+      "Unstitched",
+      "Pret Wear",
+      "Home Essentials",
+      "Men’s Fashion",
     ],
     images: [
       { src: "/sharee.png", label: "Explore our Festive Collection" },
@@ -149,37 +182,77 @@ const categories = [
   },
 ];
 
+const links = [
+  {
+    title: "MENU",
+    icon: (
+      <TextAlignJustify size={34} strokeWidth={1.5}  className="h-full w-full text-neutral-500 " />
+    ),
+    href: "#",
+  },
+
+  {
+    title: "ACCOUNT",
+    icon: (
+      <CircleUser size={34} strokeWidth={1.5}  className="h-full w-full text-neutral-500 " />
+    ),
+    href: "#",
+  },
+  {
+    title: "HOME",
+    icon: (
+      <IconHome className="h-full w-full text-neutral-500 " />
+    ),
+    href: "#",
+  },
+  {
+    title: "BUY NOW",
+    icon: (
+       <ShoppingCart size={34} strokeWidth={1.5}  className="h-full w-full text-neutral-500 "  />
+    ),
+    href: "#",
+  },
+  {
+    title: "NEW OFFERS",
+    icon: (
+      <TicketPercent size={34} strokeWidth={1.5} className="h-full w-full text-neutral-500 " />
+    ),
+    href: "#",
+  },
+
+   
+];
+
 const NavBar = () => {
   const [active, setActive] = useState<string | null>(null);
 
   return (
-    <header className="w-full h-auto">
-      <div className="w-full h-auto border-b">
-        <div className="container px-5 py-2 m-auto flex justify-between align-middle items-center">
-          <h1 className="text-3xl font-bold">CLICK2BY</h1>
+    <header className="w-full h-auto sticky">
+      <div className="w-full h-auto border-b ">
+        <div className="container px-2 py-2 m-auto flex justify-between align-middle items-center">
+          <h1 className="text-2xl md:text-3xl font-bold">CLICK2BY</h1>
 
-          <div className="flex gap-2 items-center align-middle">
-      <HoverBorderGradient
-        containerClassName="rounded-full"
-        as="button"
-        className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
-      > 
-        <span>BUY NOW</span>
-      </HoverBorderGradient>
+          <div className="flex gap-1 items-center align-middle">
+            <HoverBorderGradient
+              containerClassName="rounded-full "
+              as="button"
+              className=" bg-white text-black  flex items-center text-base px-[10px] cursor-pointer py-[6px] hover:bg-black hover:text-white transition-all duration-200"
+            >
+              <span>BUY NOW</span>
+            </HoverBorderGradient>
 
-
-            <div className="p-2 py-1 hover:bg-black hover:text-white transition-all duration-200 cursor-pointer">
-              <CircleUser size={32} strokeWidth={1} />
+            <div className="p-1 py-1 hover:bg-black hover:text-white transition-all duration-200 cursor-pointer">
+              <CircleUser size={30} strokeWidth={1} />
             </div>
-            <div className="p-2 py-1 hover:bg-black hover:text-white transition-all duration-200 cursor-pointer">
-              <TextAlignJustify size={32} strokeWidth={1.2} />
+            <div className="p-1 py-1 hover:bg-black hover:text-white transition-all duration-200 cursor-pointer">
+              <TextAlignJustify size={30} strokeWidth={1.2} />
             </div>
           </div>
         </div>
       </div>
-      <div className="container px-5 py-2 m-auto border-b">
+      <div className="w-full py-3  m-auto border-b hidden lg:block ">
         {/* Main Menu */}
-        <ul className="hidden lg:flex gap-8 font-medium text-gray-700 relative">
+        <ul className="hidden lg:flex gap-8 font-medium text-gray-700 relative justify-center align-middle">
           {categories.map((cat) => (
             <li
               key={cat.title}
@@ -197,14 +270,14 @@ const NavBar = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
                     transition={{ duration: 0.3 }}
-                    className="absolute left-0 top-12 w-full bg-white shadow-lg border-t border-gray-100"
+                    className="absolute left-0 top-8 w-full bg-white shadow-lg border-t border-gray-100"
                   >
-                    <div className="grid grid-cols-12 gap-6 p-6">
+                    <div className="grid grid-cols-12 gap-6 p-8">
                       {/* Left menu links */}
                       <div className="col-span-3 border-r border-gray-200 pr-6">
-                        <ul className="space-y-3 text-sm">
-                          {cat.links.map((link) => (
-                            <li key={link}>
+                        <ul className="space-y-3 text-sm overflow-auto  lg:h-[280px] xl:h-[380px] 2xl:h-[480px]">
+                          {cat.links.map((link, index) => (
+                            <li key={index}>
                               <Link
                                 href={`/category/${link
                                   .toLowerCase()
@@ -228,10 +301,10 @@ const NavBar = () => {
                             <img
                               src={img.src}
                               alt={img.label}
-                              className="w-full h-40 object-cover"
+                              className="w-full h-full object-cover"
                             />
-                            <div className="absolute inset-0 bg-black/40 flex items-end p-2 opacity-0 group-hover:opacity-100 transition">
-                              <p className="text-white text-sm font-medium">
+                            <div className="absolute inset-0 bg-black/40 flex items-end justify-center p-2 opacity-0 group-hover:opacity-100 transition">
+                              <p className="text-white text-lg font-medium">
                                 {img.label}
                               </p>
                             </div>
@@ -246,6 +319,8 @@ const NavBar = () => {
           ))}
         </ul>
       </div>
+
+      <FloatingDock items={links} desktopClassName={` fixed w-screen bottom-0 z-[30]`} />
     </header>
   );
 };
