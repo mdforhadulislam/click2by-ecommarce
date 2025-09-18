@@ -12,6 +12,7 @@ import { useRef, useState } from "react";
 import { categories } from "../Nav/NavBar";
 import { ArrowLeft, ChevronRight, X } from "lucide-react";
 
+
 export const FloatingDock = ({
   items,
   className,
@@ -24,88 +25,112 @@ export const FloatingDock = ({
   className?: string;
 }) => {
   const mouseX = useMotionValue(Infinity);
-  const [isMenu, setIsMenu]= useState(true)
-    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [isMenu, setIsMenu] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  // jodi category select kora thake
   const activeCategory = categories.find(
     (cat) => cat.title === selectedCategory
   );
+
   return (
     <>
-    {isMenu && (
-        <div className="fixed inset-0 bg-black/50 z-30 lg:hidden">
-          <div className="absolute bottom-[65px] left-0 right-0 bg-white rounded-t-2xl p-8 h-96 overflow-y-auto hiddenScrollBar">
-            <div className="flex justify-between items-center">
-              <div className="flex items-center gap-2">
-                {selectedCategory && (
-                  <button
-                    onClick={() => setSelectedCategory(null)}
-                    className="p-1 rounded-full hover:bg-gray-100 cursor-pointer"
-                  >
-                    <ArrowLeft className="h-5 w-5 " />
+      {/* AnimatePresence for mounting/unmounting */}
+      <AnimatePresence>
+        {isMenu && (
+          <motion.div
+            key="menu-backdrop"
+            className="fixed inset-0 bg-black/50 z-30 lg:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            {/* Drawer */}
+            <motion.div
+              key="menu-drawer"
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", stiffness: 120, damping: 20 }}
+              className="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl py-5 px-3 h-[70%]"
+            >
+              <div className="w-full p-3 h-full overflow-y-auto hiddenScrollBar">
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-2">
+                    {selectedCategory && (
+                      <button
+                        onClick={() => setSelectedCategory(null)}
+                        className="p-1 rounded-full hover:bg-gray-100 cursor-pointer"
+                      >
+                        <ArrowLeft className="h-5 w-5 " />
+                      </button>
+                    )}
+                    <h2 className="text-lg font-semibold">
+                      {selectedCategory || "Menu"}
+                    </h2>
+                  </div>
+                  <button onClick={() => setIsMenu(false)}>
+                    <X className="h-6 w-6 cursor-pointer" />
                   </button>
+                </div>
+
+                {/* Level 1 */}
+                {!selectedCategory && (
+                  <ul className="mt-4 space-y-4">
+                    {categories.map((item, idx) => (
+                      <li
+                        key={idx}
+                        className="border-b pb-2 text-neutral-700 hover:text-black cursor-pointer flex justify-between"
+                        onClick={() => setSelectedCategory(item.title)}
+                      >
+                        {item.title}
+                        {item.links.length > 0 && <ChevronRight />}
+                      </li>
+                    ))}
+                  </ul>
                 )}
-                <h2 className="text-lg font-semibold">
-                  {selectedCategory || "Menu"}
-                </h2>
+
+                {/* Level 2 */}
+                {selectedCategory && activeCategory && (
+                  <ul className="mt-4 space-y-4">
+                    {activeCategory.links.map((sub, i) => (
+                      <li
+                        key={i}
+                        className="border-b pb-2 text-neutral-600 hover:text-black cursor-pointer"
+                      >
+                        {sub}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
-              <button onClick={() => setIsMenu(false)}>
-                <X className="h-6 w-6 cursor-pointer" />
-              </button>
-            </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-            {/* Level 1: Main Categories */}
-            {!selectedCategory && (
-              <ul className="mt-4 space-y-4">
-                {categories.map((item, idx) => (
-                  <li
-                    key={idx}
-                    className="border-b pb-2 text-neutral-700 hover:text-black cursor-pointer flex justify-between"
-                    onClick={() => setSelectedCategory(item.title)}
-                  >
-                    {item.title}
-
-                    {item.links.length > 0 && <ChevronRight /> }
-                  </li>
-                ))}
-              </ul>
-            )}
-
-            {/* Level 2: Sub Categories */}
-            {selectedCategory && activeCategory && (
-              <ul className="mt-4 space-y-4">
-                {activeCategory.links.map((sub, i) => (
-                  <li
-                    key={i}
-                    className="border-b pb-2 text-neutral-600 hover:text-black cursor-pointer"
-                  >
-                    {sub}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        </div>
-      )}
-    <motion.div
-      onMouseMove={(e) => mouseX.set(e.pageX)}
-      onMouseLeave={() => mouseX.set(Infinity)}
-      className={cn(
-        "mx-auto lg:hidden h-16 items-end gap-5 bg-gray-50 px-4 pb-3 flex justify-center",
-        className
-      )}
-    >
-
-      
-
-      {items.map((item) => (
-        <IconContainer mouseX={mouseX} key={item.title} {...item} setIsMenu={setIsMenu} isMenu={isMenu} />
-      ))}
-    </motion.div>
+      {/* Bottom Dock */}
+      <motion.div
+        onMouseMove={(e) => mouseX.set(e.pageX)}
+        onMouseLeave={() => mouseX.set(Infinity)}
+        className={cn(
+          "mx-auto lg:hidden h-16 items-end gap-5 bg-gray-50 px-4 pb-3 flex justify-center",
+          className
+        )}
+      >
+        {items.map((item) => (
+          <IconContainer
+            mouseX={mouseX}
+            key={item.title}
+            {...item}
+            setIsMenu={setIsMenu}
+            isMenu={isMenu}
+          />
+        ))}
+      </motion.div>
     </>
   );
 };
+
 
 function IconContainer({
   mouseX,
