@@ -256,7 +256,7 @@ const NavBar = () => {
               <span>BUY NOW</span>
             </HoverBorderGradient>
 
-            <div className="p-1 py-1 hover:bg-black hover:text-white transition-all duration-200 cursor-pointer">
+            <div className="p-1 py-1 hover:bg-black hover:text-white transition-all duration-200 cursor-pointer hidden lg:block">
               <CircleUser size={30} strokeWidth={1} />
             </div>
             <div className="p-1 py-1 hover:bg-black hover:text-white transition-all duration-200 cursor-pointer">
