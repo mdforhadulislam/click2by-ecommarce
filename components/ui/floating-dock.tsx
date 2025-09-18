@@ -12,9 +12,14 @@ import { useRef, useState } from "react";
 
 export const FloatingDock = ({
   items,
-  desktopClassName, 
+  desktopClassName,
 }: {
-  items: { title: string; icon: React.ReactNode; href: string }[];
+  items: {
+    title: string;
+    icon: React.ReactNode;
+    href: string;
+    onClick: () => void;
+  }[];
   desktopClassName?: string;
   mobileClassName?: string;
 }) => {
@@ -29,7 +34,12 @@ const FloatingDockDesktop = ({
   items,
   className,
 }: {
-  items: { title: string; icon: React.ReactNode; href: string }[];
+  items: {
+    title: string;
+    icon: React.ReactNode;
+    href: string;
+    onClick: () => void;
+  }[];
   className?: string;
 }) => {
   const mouseX = useMotionValue(Infinity);
@@ -43,7 +53,12 @@ const FloatingDockDesktop = ({
       )}
     >
       {items.map((item) => (
-        <IconContainer mouseX={mouseX} key={item.title} {...item} />
+        <IconContainer
+          mouseX={mouseX}
+          key={item.title}
+          {...item}
+          onClick={item.onClick}
+        />
       ))}
     </motion.div>
   );
@@ -54,11 +69,13 @@ function IconContainer({
   title,
   icon,
   href,
+  onClick,
 }: {
   mouseX: MotionValue;
   title: string;
   icon: React.ReactNode;
   href: string;
+  onClick: () => void;
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -107,7 +124,7 @@ function IconContainer({
   const [hovered, setHovered] = useState(false);
 
   return (
-    <a href={href}>
+    <a>
       <motion.div
         ref={ref}
         style={{ width, height }}

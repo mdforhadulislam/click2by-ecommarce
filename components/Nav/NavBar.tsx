@@ -1,16 +1,14 @@
 "use client";
-import { CircleUser, ShoppingCart, TextAlignJustify, TicketPercent } from "lucide-react";
+import {
+  CircleUser,
+  ShoppingCart,
+  TextAlignJustify,
+  TicketPercent,
+} from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
-import {
-  IconBrandGithub,
-  IconBrandX,
-  IconExchange,
-  IconHome,
-  IconNewSection,
-  IconTerminal2,
-} from "@tabler/icons-react";
+import { IconHome } from "@tabler/icons-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { FloatingDock } from "../ui/floating-dock";
 import { HoverBorderGradient } from "../ui/hover-border-gradient";
@@ -182,49 +180,66 @@ const categories = [
   },
 ];
 
-const links = [
-  {
-    title: "MENU",
-    icon: (
-      <TextAlignJustify size={34} strokeWidth={1.5}  className="h-full w-full text-neutral-500 " />
-    ),
-    href: "#",
-  },
-
-  {
-    title: "ACCOUNT",
-    icon: (
-      <CircleUser size={34} strokeWidth={1.5}  className="h-full w-full text-neutral-500 " />
-    ),
-    href: "#",
-  },
-  {
-    title: "HOME",
-    icon: (
-      <IconHome className="h-full w-full text-neutral-500 " />
-    ),
-    href: "#",
-  },
-  {
-    title: "BUY NOW",
-    icon: (
-       <ShoppingCart size={34} strokeWidth={1.5}  className="h-full w-full text-neutral-500 "  />
-    ),
-    href: "#",
-  },
-  {
-    title: "NEW OFFERS",
-    icon: (
-      <TicketPercent size={34} strokeWidth={1.5} className="h-full w-full text-neutral-500 " />
-    ),
-    href: "#",
-  },
-
-   
-];
-
 const NavBar = () => {
   const [active, setActive] = useState<string | null>(null);
+
+  const links = [
+    {
+      title: "MENU",
+      icon: (
+        <TextAlignJustify
+          size={34}
+          strokeWidth={1.5}
+          className="h-full w-full text-neutral-500 "
+        />
+      ),
+      href: "#",
+      onclick: () => {},
+    },
+
+    {
+      title: "ACCOUNT",
+      icon: (
+        <CircleUser
+          size={34}
+          strokeWidth={1.5}
+          className="h-full w-full text-neutral-500 "
+        />
+      ),
+      href: "#",
+      onclick: () => {},
+    },
+    {
+      title: "HOME",
+      icon: <IconHome className="h-full w-full text-neutral-500 " />,
+      href: "#",
+      onclick: () => {},
+    },
+    {
+      title: "BUY NOW",
+      icon: (
+        <ShoppingCart
+          size={34}
+          strokeWidth={1.5}
+          className="h-full w-full text-neutral-500 "
+        />
+      ),
+      href: "#",
+      onclick: () => {},
+    },
+    {
+      title: "NEW OFFERS",
+      icon: (
+        <TicketPercent
+          size={34}
+          strokeWidth={1.5}
+          className="h-full w-full text-neutral-500 "
+        />
+      ),
+      href: "#",
+      onclick: () => {},
+    },
+  ];
 
   return (
     <header className="w-full h-auto sticky">
@@ -320,7 +335,10 @@ const NavBar = () => {
         </ul>
       </div>
 
-      <FloatingDock items={links} desktopClassName={` fixed w-screen bottom-0 z-[30]`} />
+      <FloatingDock
+        items={links}
+        desktopClassName={` fixed w-screen bottom-0 z-[30]`}
+      />
     </header>
   );
 };
