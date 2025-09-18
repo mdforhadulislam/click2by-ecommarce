@@ -10,7 +10,7 @@ import {
 
 import { useRef, useState } from "react";
 import { categories } from "../Nav/NavBar";
-import { ArrowLeft, X } from "lucide-react";
+import { ArrowLeft, ChevronRight, X } from "lucide-react";
 
 export const FloatingDock = ({
   items,
@@ -32,26 +32,18 @@ export const FloatingDock = ({
     (cat) => cat.title === selectedCategory
   );
   return (
-    <motion.div
-      onMouseMove={(e) => mouseX.set(e.pageX)}
-      onMouseLeave={() => mouseX.set(Infinity)}
-      className={cn(
-        "mx-auto lg:hidden h-16 items-end gap-5 rounded-2xl bg-gray-50 px-4 pb-3 flex justify-center",
-        className
-      )}
-    >
-
-      {isMenu && (
-        <div className="fixed inset-0 bg-black/50 z-30 p-4">
-          <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl p-4 h-[70%] overflow-y-auto hiddenScrollBar">
+    <>
+    {isMenu && (
+        <div className="fixed inset-0 bg-black/50 z-30 lg:hidden">
+          <div className="absolute bottom-[65px] left-0 right-0 bg-white rounded-t-2xl p-8 h-96 overflow-y-auto hiddenScrollBar">
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-2">
                 {selectedCategory && (
                   <button
                     onClick={() => setSelectedCategory(null)}
-                    className="p-1 rounded-full hover:bg-gray-100"
+                    className="p-1 rounded-full hover:bg-gray-100 cursor-pointer"
                   >
-                    <ArrowLeft className="h-5 w-5" />
+                    <ArrowLeft className="h-5 w-5 " />
                   </button>
                 )}
                 <h2 className="text-lg font-semibold">
@@ -59,7 +51,7 @@ export const FloatingDock = ({
                 </h2>
               </div>
               <button onClick={() => setIsMenu(false)}>
-                <X className="h-6 w-6" />
+                <X className="h-6 w-6 cursor-pointer" />
               </button>
             </div>
 
@@ -69,10 +61,12 @@ export const FloatingDock = ({
                 {categories.map((item, idx) => (
                   <li
                     key={idx}
-                    className="border-b pb-2 text-neutral-700 hover:text-black cursor-pointer"
+                    className="border-b pb-2 text-neutral-700 hover:text-black cursor-pointer flex justify-between"
                     onClick={() => setSelectedCategory(item.title)}
                   >
                     {item.title}
+
+                    {item.links.length > 0 && <ChevronRight /> }
                   </li>
                 ))}
               </ul>
@@ -94,14 +88,22 @@ export const FloatingDock = ({
           </div>
         </div>
       )}
+    <motion.div
+      onMouseMove={(e) => mouseX.set(e.pageX)}
+      onMouseLeave={() => mouseX.set(Infinity)}
+      className={cn(
+        "mx-auto lg:hidden h-16 items-end gap-5 bg-gray-50 px-4 pb-3 flex justify-center",
+        className
+      )}
+    >
 
-
-
+      
 
       {items.map((item) => (
         <IconContainer mouseX={mouseX} key={item.title} {...item} setIsMenu={setIsMenu} isMenu={isMenu} />
       ))}
     </motion.div>
+    </>
   );
 };
 
@@ -177,7 +179,7 @@ function IconContainer({
         style={{ width, height }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        className="relative flex aspect-square items-center justify-center rounded-full bg-gray-200 cursor-pointer z-31"
+        className="relative flex aspect-square items-center justify-center rounded-full bg-gray-200 cursor-pointer"
       >
         <AnimatePresence>
           {hovered && (
