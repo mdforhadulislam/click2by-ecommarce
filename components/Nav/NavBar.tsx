@@ -245,7 +245,7 @@ const NavBar = () => {
     <header className="w-full h-auto sticky">
       <div className="w-full h-auto border-b ">
         <div className="container px-2 py-2 m-auto flex justify-between align-middle items-center">
-          <h1 className="text-2xl md:text-3xl font-bold">CLICK2BY</h1>
+          <h1 className="text-2xl md:text-3xl font-bold">Bazaarfly</h1>
 
           <div className="flex gap-1 items-center align-middle">
             <HoverBorderGradient
