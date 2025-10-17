@@ -1,5 +1,5 @@
 import Footer from "@/components/Footer/Footer";
-import NavBar from "@/components/Nav/NavBar";
+import UpdatedNavBar from "@/components/Nav/UpdatedNavBar";
 import LangContextProvider from "@/context/LangContext";
 import React from "react";
 
@@ -7,7 +7,7 @@ const SiteLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   return (
     <>
       <LangContextProvider>
-        <NavBar />
+        <UpdatedNavBar />
         {children}
         <Footer />
       </LangContextProvider>
