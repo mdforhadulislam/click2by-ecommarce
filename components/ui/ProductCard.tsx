@@ -7,13 +7,17 @@ import { cn } from "@/lib/utils";
 
 interface ProductCardProps {
   id: string;
-  name: string;
+  name?: string;
+  title?: string;
   slug: string;
   description?: string;
-  base_price: string;
+  base_price?: string;
+  price?: number;
   discount_price?: string;
   categories?: { id: string; name: string }[];
+  category?: string;
   images?: { id: string; image: string; name?: string }[];
+  image?: string;
   onAddToCart: () => void;
   testId?: string;
 }
@@ -21,21 +25,27 @@ interface ProductCardProps {
 export default function ProductCard({
   id,
   name,
+  title,
   slug,
   description,
   base_price,
+  price: priceNum,
   discount_price,
   categories,
+  category: categoryStr,
   images,
+  image: imageStr,
   onAddToCart,
   testId,
 }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
 
-  const mainImage = images && images.length > 0 ? images[0].image : null;
-  const category = categories && categories.length > 0 ? categories[0].name : null;
-  const price = discount_price || base_price;
+  // Handle both API formats
+  const productName = name || title || 'Product';
+  const mainImage = imageStr || (images && images.length > 0 ? images[0].image : null);
+  const category = categoryStr || (categories && categories.length > 0 ? categories[0].name : null);
+  const price = discount_price || base_price || (priceNum ? String(priceNum) : '0');
 
   return (
     <div
@@ -50,7 +60,7 @@ export default function ProductCard({
           {mainImage ? (
             <img
               src={mainImage}
-              alt={name}
+              alt={productName}
               className={cn(
                 "w-full h-full object-cover transition-transform duration-700",
                 isHovered && "scale-110"
@@ -115,7 +125,7 @@ export default function ProductCard({
       <div className="p-5">
         <Link href={`/products/${slug}`}>
           <h3 className="font-bold text-lg mb-2 line-clamp-2 hover:text-purple-600 transition-colors">
-            {name}
+            {productName}
           </h3>
         </Link>
 

@@ -33,7 +33,7 @@ export default function Home() {
     try {
       const response: any = await ApiService.products.getAll();
       const productsData = response.results || response.data || response || [];
-      setProducts(productsData.slice(0, 8));
+      setProducts(productsData);
     } catch (error) {
       console.error("Failed to fetch products:", error);
     } finally {
